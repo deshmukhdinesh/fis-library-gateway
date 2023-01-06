@@ -1,0 +1,30 @@
+server:
+  port: 8088
+  
+  # Eureka Server Details
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      default-zone: http://localhost:8761/eureka/
+      
+spring:
+  application:
+    name: library-gateway
+  cloud:
+    gateway:
+      routes:
+      - id: bookService
+        uri: lb://book-service
+        predicates:
+        - Path=/books/**
+      - id: subscriptionService
+        uri: lb://subscription-service
+        predicates:
+        - Path=/subscriptions/**
+           
+          
+
